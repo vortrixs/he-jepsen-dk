@@ -12,23 +12,18 @@ use Vortrixs\Portfolio\Core\ViewModelFactory;
 class Controller
 {
     public function __construct(
-        private Public\Renderer $renderer,
+        private Public\Page $page,
         private ViewModelFactory $viewModelFactory,
         private StreamFactoryInterface $streamFactory,
     ) {}
 
     public function __invoke(Request $request, Response $response)
     {
-        $viewModel = $this->viewModelFactory->create(Components\Portfolio\ViewModel::class);
+        $this->page->title = 'Portfolio';
+        $this->page->url = 'https://he-jepsen.dk/portfolio';
+        $this->page->viewModel = $this->viewModelFactory->create(Components\Portfolio\ViewModel::class);
 
-        $head = [
-            '<meta property="og:title" content="Portfolio">',
-            '<meta property="og:url" content="https://he-jepsen.dk/portfolio">',
-        ];
-
-        $body = $this->streamFactory->createStream(
-            $this->renderer->renderPage($viewModel, $head, $request)
-        );
+        $body = $this->streamFactory->createStream($this->page->render($request));
 
         return $response
             ->withBody($body)

@@ -1,35 +1,58 @@
-/*@keyframes bounceRight {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-8px);
-  }
-}*/
-/* animation: bounceRight 2s infinite; */
-
 :root {
-  --color-primary: hsl(0, 66%, 57%);
-  --color-secondary: hsl(40, 100%, 70%);
-  --color-background: hsl(0, 0%, 7%);
+  --bg-dark: oklch(0.92 0 20);
+  --bg: oklch(0.96 0 20);
+  --bg-light: oklch(1 0 20);
+  --text: oklch(0.15 0 20);
+  --text-muted: oklch(0.4 0 20);
+  --highlight: oklch(1 0 20);
+  --border: oklch(0.6 0 20);
+  --border-muted: oklch(0.7 0 20);
+  --primary: oklch(0.4 0.1 20);
+  --secondary: oklch(0.4 0.1 244);
+  --danger: oklch(0.5 0.05 30);
+  --warning: oklch(0.5 0.05 100);
+  --success: oklch(0.5 0.05 160);
+  --info: oklch(0.5 0.05 260);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-dark: oklch(0.1 0 64);
+    --bg: oklch(0.15 0 64);
+    --bg-light: oklch(0.2 0 64);
+    --text: oklch(0.96 0 64);
+    --text-muted: oklch(0.76 0 64);
+    --highlight: oklch(0.5 0 64);
+    --border: oklch(0.4 0 64);
+    --border-muted: oklch(0.3 0 64);
+    --primary: oklch(0.68 0.19 47);
+    --secondary: oklch(0.68 0.19 227);
+    --danger: oklch(0.7 0.05 30);
+    --warning: oklch(0.7 0.05 100);
+    --success: oklch(0.7 0.05 160);
+    --info: oklch(0.7 0.05 260);
+  }
 }
 
 body {
-  background-color: var(--color-background);
-  color: white;
+  background-color: var(--bg-dark);
+  color: var(--text);
   font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
   font-size: 1.2rem;
   margin-inline: 20vw; /* This works well, but consider settings a max-width on larger viewports, that would also require a change to the margins */
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--primary);
   text-decoration: none;
 }
 
+p > a {
+  text-decoration: revert;
+}
+
 a:hover {
-  color: color-mix(in hsl, currentcolor 10%, lightcoral);
+  color: color-mix(in oklab, var(--primary), var(--text) 65%);
 }
 
 header nav {
@@ -59,10 +82,44 @@ header nav a:hover .nav__arrow {
   visibility: visible;
 }
 
-.card:not(:last-of-type) {
-  margin-bottom: 50px;
+header aside {
+  line-height: 28px;
+}
+
+main {
+  --spacing: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing);
+  padding: var(--spacing) 0;
+}
+
+.card {
+  background-color: var(--bg);
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px #00000030, 0px 12px 12px #00000015;
+}
+
+.card .card__title {
+  margin: 0;
+  padding: 30px;
+  background-color: var(--bg-light);
+  border-radius: 20px 20px 0 0;
+}
+
+.card .card__line,
+.card .card__text {
+  padding: 0 20px;
+}
+
+.card .card__text {
+  line-height: 28px;
 }
 
 .card .card__line {
-  color: var(--color-secondary);
+  color: var(--secondary);
+}
+
+.card li {
+  margin-bottom: 10px;
 }
